@@ -1,0 +1,23 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 3.22 FATAL_ERROR)
+if(COMMAND cmake_policy)
+	cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
+project(CNPY)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+option(ENABLE_STATIC "Build static (.a) library" ON)
+
+find_package(ZLIB REQUIRED)
+
+include_directories(${ZLIB_INCLUDE_DIRS})
+
+add_library(cnpy STATIC "cnpy.cpp")
+target_include_directories(cnpy PUBLIC "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>")
+target_link_libraries(cnpy PUBLIC ZLIB::ZLIB)
+set_target_properties(cnpy PROPERTIES OUTPUT_NAME "cnpy")
+install(TARGETS "cnpy" ARCHIVE DESTINATION lib)
+
+install(FILES "cnpy.h" DESTINATION include)
+install(FILES "mat2npz" "npy2mat" "npz2mat" DESTINATION bin PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)

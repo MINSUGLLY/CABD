@@ -1,0 +1,20 @@
+{
+    "mesh": {
+        "pathV": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/cube/tetMesh/cube32/TV.npy",
+        "pathT": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/cube/tetMesh/cube32/TT.npy",
+        "pathF": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/cube/tetMesh/cube32/TF.npy"
+    },
+
+    "origin": {
+        "scale": 1.0,
+        "xyz": [0.0, 0.0, 0.0],
+        "rpy": [0.0, 0.0, 0.0]
+    },
+
+    "parameter": {
+        "rho": 1.0e0,
+        "kappa": 1.0e3,
+        "nv": 0.3,
+        "soft": true
+    }
+}

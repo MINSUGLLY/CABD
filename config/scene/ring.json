@@ -1,0 +1,18 @@
+{
+    "gravity": [0.0, 0.0, -1.0],
+    "dt": 1.0e-3,
+    "convergenceEpsilon": 1.0e-6,
+    "alphaGD": 1.0e0,
+
+    "framesTotal": 1e3,
+
+    "object": {
+
+    },
+
+    "multibody": {
+        "chain":{
+            "configPath": "../config/multibody/ring.json"
+        }
+    }
+}

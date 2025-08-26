@@ -1,0 +1,12 @@
+{
+    "links": [
+        {"id": 0, "configPath": "../config/../config/object/link.json", "xyz": [0.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": true},
+        {"id": 1, "configPath": "../config/../config/object/link.json", "xyz": [2.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false}
+    ],
+
+    "joints":[
+        {"obj0": 0, "obj1": 1, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 0, "obj1": 1, "pos0": [2.0, 1.0, 0.0],"pos1":[0.0, 1.0, 0.0]},
+        {"obj0": 0, "obj1": 1, "pos0": [2.0, 0.0, 1.0],"pos1":[0.0, 0.0, 1.0]}
+    ]
+}

@@ -1,0 +1,22 @@
+{
+      "gravity": [0.0, 0.0, 0.0],
+      "dt": 1.0e-3,
+      "convergenceEpsilon": 1.0e-6,
+      "alphaGD": 1.0e0,
+
+      "framesTotal": 1e3,
+
+      "object": {
+            "cube0": {
+                  "configPath": "../config/object/rod.json",
+                  "initp": [0.0, 0.0, 5.0],
+                  "initR": [[1.0, 0.0, 0.0], 
+                              [0.0, 1.0, 0.0],
+                              [0.0, 0.0, 1.0]]
+            }
+      },
+
+      "multibody": {
+
+      }
+}

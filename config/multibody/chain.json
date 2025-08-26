@@ -1,0 +1,48 @@
+{
+    "links": [
+        {"id": 0, "configPath": "../config/../config/object/link.json", "xyz": [0.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": true},
+        {"id": 1, "configPath": "../config/../config/object/link.json", "xyz": [2.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 2, "configPath": "../config/../config/object/link.json", "xyz": [4.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 3, "configPath": "../config/../config/object/link.json", "xyz": [6.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 4, "configPath": "../config/../config/object/link.json", "xyz": [8.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 5, "configPath": "../config/../config/object/link.json", "xyz": [10.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 6, "configPath": "../config/../config/object/link.json", "xyz": [12.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 7, "configPath": "../config/../config/object/link.json", "xyz": [14.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 8, "configPath": "../config/../config/object/link.json", "xyz": [16.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 9, "configPath": "../config/../config/object/link.json", "xyz": [18.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 10, "configPath": "../config/../config/object/link.json", "xyz": [20.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 11, "configPath": "../config/../config/object/link.json", "xyz": [22.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 12, "configPath": "../config/../config/object/link.json", "xyz": [24.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 13, "configPath": "../config/../config/object/link.json", "xyz": [26.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 14, "configPath": "../config/../config/object/link.json", "xyz": [28.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 15, "configPath": "../config/../config/object/link.json", "xyz": [30.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 16, "configPath": "../config/../config/object/link.json", "xyz": [32.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 17, "configPath": "../config/../config/object/link.json", "xyz": [34.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 18, "configPath": "../config/../config/object/link.json", "xyz": [36.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 19, "configPath": "../config/../config/object/link.json", "xyz": [38.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": false},
+        {"id": 20, "configPath": "../config/../config/object/link.json", "xyz": [40.0, 0.0, 20.0], "rpy": [0.0, 0.0, 0.0], "static": true}
+    ],
+
+    "joints":[
+        {"obj0": 0, "obj1": 1, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 1, "obj1": 2, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 2, "obj1": 3, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 3, "obj1": 4, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 4, "obj1": 5, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 5, "obj1": 6, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 6, "obj1": 7, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 7, "obj1": 8, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 8, "obj1": 9, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 9, "obj1": 10, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 10, "obj1": 11, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 11, "obj1": 12, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 12, "obj1": 13, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 13, "obj1": 14, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 14, "obj1": 15, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 15, "obj1": 16, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 16, "obj1": 17, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 17, "obj1": 18, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 18, "obj1": 19, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]},
+        {"obj0": 19, "obj1": 20, "pos0": [2.0, 0.0, 0.0],"pos1":[0.0, 0.0, 0.0]}
+    ]
+}
