@@ -12,7 +12,6 @@ public:
 
     // mesh
     matX meshTV;
-    matX meshTVtemp;
     matXi meshTT;
     matXi meshTF;
 
@@ -57,6 +56,32 @@ public:
     mat3 Rd;
     vec3 dp;
     mat3 dR;
+
+    // FEM
+    void FEMprecompute();
+
+    bool soft = false;
+    int nPsurface = 0;
+    matX meshTVtemp;
+    matX meshTViter;
+    matX meshTVtilde;
+    matX meshTVforce;
+    matX meshTVdot;
+    matX meshTVacc;
+
+    vecX FEMM;
+    matX FEMK;
+    matX FEMhessian;
+
+    matX Kssinv;
+    matX KssinvKsm;
+    matX KmsKssinv;
+    vecX KssinvFs;
+
+    matX FEMhessianCondInv;
+    vecX FEMgradCond;
+
+    matXi fixVs;
 
     // collision
     igl::AABB<Eigen::MatrixXd, 3> localAABBtree;

@@ -11,7 +11,7 @@ int main(){
 
     // sim.loadConfig("../config/scene/ball.json");
     // sim.loadConfig("../config/scene/cube.json");
-    sim.loadConfig("../config/scene/rod.json");
+    // sim.loadConfig("../config/scene/rod.json");
     // sim.loadConfig("../config/scene/link.json");
 
     // sim.loadConfig("../config/scene/chain.json");
@@ -19,6 +19,7 @@ int main(){
     // sim.loadConfig("../config/scene/grid.json");
 
     // sim.loadConfig("../config/scene/deform_test.json");
+    sim.loadConfig("../config/scene/rod_static.json");
 
     /*---- end ----*/
 
