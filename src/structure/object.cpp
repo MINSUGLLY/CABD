@@ -120,10 +120,10 @@ void Object::generateLinearHessianInv(){
     }
 
     for(int tetIdx = 0; tetIdx < meshTT.rows(); tetIdx++){
-        v0temp = meshTV.row(meshTT(tetIdx, 0)).transpose();
-        v1temp = meshTV.row(meshTT(tetIdx, 1)).transpose();
-        v2temp = meshTV.row(meshTT(tetIdx, 2)).transpose();
-        v3temp = meshTV.row(meshTT(tetIdx, 3)).transpose();
+        v0temp = meshTV.row(meshTT(tetIdx, 0));
+        v1temp = meshTV.row(meshTT(tetIdx, 1));
+        v2temp = meshTV.row(meshTT(tetIdx, 2));
+        v3temp = meshTV.row(meshTT(tetIdx, 3));
         tetV = std::abs((v1temp - v0temp).dot((v2temp - v0temp).cross(v3temp - v0temp))) / 6.0;
 
         matJ J;
@@ -156,6 +156,9 @@ void Object::generateLinearHessianInv(){
     // Mtet.block<3, 3>(6, 6) = 250.0 / 3.0 * mat3::Identity();
     // spdlog::warn("use rod");
 
+    // if(soft){
+    //     Mtet *= 1.0e-1;
+    // }
     linearHessian = Mtet + Ktet;
     linearHessianInv = linearHessian.inverse();
 }
@@ -271,6 +274,8 @@ void Object::FEMprecompute(){
 
     FEMgradCond.resize(3 * nPsurface);
     FEMgradCond.setZero();
+
+    spdlog::info("fix points: {} / {}   condensation points: {} / {}    tet: {}", fixVs.rows(), meshTV.rows(), nPsurface, meshTV.rows(), meshTT.rows());
 }
 
 mat3 Object::BMatrixLower(const vec3& src){

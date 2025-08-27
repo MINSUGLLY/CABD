@@ -108,89 +108,118 @@ void Simulator::multibodyAdvance(std::shared_ptr<Multibody> multibody){
         }
     }
 
-    // set constraint
-    matX matC;
-    matC.resize(3 * multibody->jointsList.size(), 12 * multibody->linksList.size());
-    matC.setZero();
-    int rowIdx = 0;
-    for(const auto& joint : multibody->jointsList){
-        vec3 p0;
-        mat3 R0;
-        utils::q2Rp(multibody->linksList[joint->idx0]->q, R0, p0);
+    if(multibody->jointsList.size() != 0){
+        // set constraint
+        matX matC;
+        matC.resize(3 * multibody->jointsList.size(), 12 * multibody->linksList.size());
+        matC.setZero();
+        int rowIdx = 0;
+        for(const auto& joint : multibody->jointsList){
+            vec3 p0;
+            mat3 R0;
+            utils::q2Rp(multibody->linksList[joint->idx0]->q, R0, p0);
 
-        vec3 p1;
-        mat3 R1;
-        utils::q2Rp(multibody->linksList[joint->idx1]->q, R1, p1);
+            vec3 p1;
+            mat3 R1;
+            utils::q2Rp(multibody->linksList[joint->idx1]->q, R1, p1);
 
-        matJ JR0;
-        matJ JR1;
-        matJ J0;
-        matJ J1;
+            matJ JR0;
+            matJ JR1;
+            matJ J0;
+            matJ J1;
 
-        utils::getJR(joint->pos0, R0, JR0);
-        matC.block<3, 12>(rowIdx, 12 * multibody->linksList[joint->idx0]->idx) = JR0;
-        utils::getJR(joint->pos1, R1, JR1);
-        matC.block<3, 12>(rowIdx, 12 * multibody->linksList[joint->idx1]->idx) = -JR1;
+            utils::getJR(joint->pos0, R0, JR0);
+            matC.block<3, 12>(rowIdx, 12 * multibody->linksList[joint->idx0]->idx) = JR0;
+            utils::getJR(joint->pos1, R1, JR1);
+            matC.block<3, 12>(rowIdx, 12 * multibody->linksList[joint->idx1]->idx) = -JR1;
+            
+            utils::getJ(joint->pos0, J0);
+            utils::getJ(joint->pos1, J1);
+            gradient.block<3, 1>(12 * multibody->linksList.size() + rowIdx, 0) = J0 * multibody->linksList[joint->idx0]->q - J1 * multibody->linksList[joint->idx1]->q;
         
-        utils::getJ(joint->pos0, J0);
-        utils::getJ(joint->pos1, J1);
-        gradient.block<3, 1>(12 * multibody->linksList.size() + rowIdx, 0) = J0 * multibody->linksList[joint->idx0]->q - J1 * multibody->linksList[joint->idx1]->q;
-    
-        rowIdx += 3;
-    }
+            rowIdx += 3;
+        }
 
-    matX matS;
-    matS.resize(3 * multibody->jointsList.size(), 3 * multibody->jointsList.size());
-    matS.setZero();
-    vecX CHinvf;
-    CHinvf.resize(3 * multibody->jointsList.size());
-    CHinvf.setZero();
-    for(const auto& link : multibody->linksList){
-        matX Cn = matC.block(0, 12 * link->idx, 3 * multibody->jointsList.size(), 12);
-        
-        for(int i = 0; i < link->begList.size(); i++){
-            for(int j = i; j < link->begList.size(); j++){
-                matX temp = Cn.block(link->begList[i], 0, 3, 12) * link->linearHessianInv * Cn.block(link->begList[j], 0, 3, 12).transpose();
-                matS.block(link->begList[i], link->begList[j], 3, 3) += temp;
-                if(i != j){
-                    matS.block(link->begList[j], link->begList[i], 3, 3) += temp.transpose();
+        matX matS;
+        matS.resize(3 * multibody->jointsList.size(), 3 * multibody->jointsList.size());
+        matS.setZero();
+        vecX CHinvf;
+        CHinvf.resize(3 * multibody->jointsList.size());
+        CHinvf.setZero();
+        for(const auto& link : multibody->linksList){
+            matX Cn = matC.block(0, 12 * link->idx, 3 * multibody->jointsList.size(), 12);
+            
+            for(int i = 0; i < link->begList.size(); i++){
+                for(int j = i; j < link->begList.size(); j++){
+                    matX temp = Cn.block(link->begList[i], 0, 3, 12) * link->linearHessianInv * Cn.block(link->begList[j], 0, 3, 12).transpose();
+                    matS.block(link->begList[i], link->begList[j], 3, 3) += temp;
+                    if(i != j){
+                        matS.block(link->begList[j], link->begList[i], 3, 3) += temp.transpose();
+                    }
                 }
+                CHinvf.block(link->begList[i], 0, 3, 1) += Cn.block(link->begList[i], 0, 3, 12) * link->linearHessianInv * gradient.block<12, 1>(12 * link->idx, 0);
             }
-            CHinvf.block(link->begList[i], 0, 3, 1) += Cn.block(link->begList[i], 0, 3, 12) * link->linearHessianInv * gradient.block<12, 1>(12 * link->idx, 0);
+        }
+        vecX g_CHinvf = gradient.block(12 * multibody->linksList.size(), 0, 3 * multibody->jointsList.size(), 1) - CHinvf;
+
+        /* LLT */
+        Eigen::LLT<Eigen::MatrixXd> llt(matS);
+        vecX lam = llt.solve(g_CHinvf);
+        /* LLT END*/
+
+        vecX Clam = matC.transpose() * lam;
+
+        for(auto& link : multibody->linksList){
+            vec3 p;
+            mat3 R;
+            utils::q2Rp(link->q, R, p);
+            vec12 resulttemp = -link->linearHessianInv * (gradient.block<12, 1>(12 * link->idx, 0) + Clam.block<12, 1>(12 * link->idx, 0));
+
+            vec3 dpLocal = resulttemp.block<3, 1>(0, 0);
+            mat3 dRLocal;
+            dRLocal.col(0) = resulttemp.block<3, 1>(3, 0) + vec3(1.0, 0.0, 0.0);
+            dRLocal.col(1) = resulttemp.block<3, 1>(6, 0) + vec3(0.0, 1.0, 0.0);
+            dRLocal.col(2) = resulttemp.block<3, 1>(9, 0) + vec3(0.0, 0.0, 1.0);
+
+            vec3 dpGlobal = R * dpLocal;
+
+            mat3 polarDecompositionR = utils::mat3PolarDecomposition(R * dRLocal); 
+            
+            utils::Rp2q(link->qtemp, polarDecompositionR, p + dpGlobal);
+            link->qdot = (link->qtemp - link->q) / dt;
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                link->q = link->qtemp;
+            }
         }
     }
-    vecX g_CHinvf = gradient.block(12 * multibody->linksList.size(), 0, 3 * multibody->jointsList.size(), 1) - CHinvf;
+    else{
+        for(auto& link : multibody->linksList){
+            vec3 p;
+            mat3 R;
+            utils::q2Rp(link->q, R, p);
+            vec12 resulttemp = -link->linearHessianInv * gradient.block<12, 1>(12 * link->idx, 0);
 
-    /* LLT */
-    Eigen::LLT<Eigen::MatrixXd> llt(matS);
-    vecX lam = llt.solve(g_CHinvf);
-    /* LLT END*/
+            vec3 dpLocal = resulttemp.block<3, 1>(0, 0);
+            mat3 dRLocal;
+            dRLocal.col(0) = resulttemp.block<3, 1>(3, 0) + vec3(1.0, 0.0, 0.0);
+            dRLocal.col(1) = resulttemp.block<3, 1>(6, 0) + vec3(0.0, 1.0, 0.0);
+            dRLocal.col(2) = resulttemp.block<3, 1>(9, 0) + vec3(0.0, 0.0, 1.0);
 
-    vecX Clam = matC.transpose() * lam;
+            vec3 dpGlobal = R * dpLocal;
 
-    for(auto& link : multibody->linksList){
-        vec3 p;
-        mat3 R;
-        utils::q2Rp(link->q, R, p);
-        vec12 resulttemp = -link->linearHessianInv * (gradient.block<12, 1>(12 * link->idx, 0) + Clam.block<12, 1>(12 * link->idx, 0));
-
-        vec3 dpLocal = resulttemp.block<3, 1>(0, 0);
-        mat3 dRLocal;
-        dRLocal.col(0) = resulttemp.block<3, 1>(3, 0) + vec3(1.0, 0.0, 0.0);
-        dRLocal.col(1) = resulttemp.block<3, 1>(6, 0) + vec3(0.0, 1.0, 0.0);
-        dRLocal.col(2) = resulttemp.block<3, 1>(9, 0) + vec3(0.0, 0.0, 1.0);
-
-        vec3 dpGlobal = R * dpLocal;
-
-        mat3 polarDecompositionR = utils::mat3PolarDecomposition(R * dRLocal); 
-        
-        utils::Rp2q(link->qtemp, polarDecompositionR, p + dpGlobal);
-        link->qdot = (link->qtemp - link->q) / dt;
-        {
-            std::lock_guard<std::mutex> lock(mtx);
-            link->q = link->qtemp;
+            mat3 polarDecompositionR = utils::mat3PolarDecomposition(R * dRLocal); 
+            
+            utils::Rp2q(link->qtemp, polarDecompositionR, p + dpGlobal);
+            link->qdot = (link->qtemp - link->q) / dt;
+            {
+                std::lock_guard<std::mutex> lock(mtx);
+                link->q = link->qtemp;
+            }
         }
     }
 }
+
+
 
 }
