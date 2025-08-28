@@ -13,13 +13,14 @@ int main(){
     // sim.loadConfig("../config/scene/cube.json");
     // sim.loadConfig("../config/scene/rod.json");
     // sim.loadConfig("../config/scene/link.json");
+    // sim.loadConfig("../config/scene/link_circle.json");
 
     // sim.loadConfig("../config/scene/chain.json");
     // sim.loadConfig("../config/scene/ring.json");
-    // sim.loadConfig("../config/scene/grid.json");
+    sim.loadConfig("../config/scene/grid.json");
 
     // sim.loadConfig("../config/scene/deform_test.json");
-    sim.loadConfig("../config/scene/rod_static.json");
+    // sim.loadConfig("../config/scene/rod_static.json");
 
     /*---- end ----*/
 

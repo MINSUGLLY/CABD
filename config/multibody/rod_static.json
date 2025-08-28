@@ -1,6 +1,6 @@
 {
     "links": [
-        {"id": 0, "configPath": "../config/../config/object/rod_soft.json", "xyz": [0.0, 0.0, 5.0], "rpy": [0.0, 0.0, 0.0], "static": true}
+        {"id": 0, "configPath": "../config/object/rod_soft.json", "xyz": [0.0, 0.0, 5.0], "rpy": [0.0, 0.0, 0.0], "static": true}
     ],
 
     "joints":[

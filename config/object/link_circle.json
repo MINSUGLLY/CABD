@@ -1,0 +1,20 @@
+{
+    "mesh": {
+        "pathV": "/home/zhiyong/asset/iabd_file/asset/obj/chain/tetMesh/chain_circle/TV.npy",
+        "pathT": "/home/zhiyong/asset/iabd_file/asset/obj/chain/tetMesh/chain_circle/TT.npy",
+        "pathF": "/home/zhiyong/asset/iabd_file/asset/obj/chain/tetMesh/chain_circle/TF.npy"
+    },
+
+    "origin": {
+        "scale": 1.0,
+        "xyz": [1.0, 0.0, 0.0],
+        "rpy": [0.0, 0.0, 0.0]
+    },
+
+    "parameter": {
+        "rho": 1.0e0,
+        "kappa": 1.0e3,
+        "nv": 0.3,
+        "soft": false
+    }
+}
