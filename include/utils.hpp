@@ -16,6 +16,8 @@
 #include <thread>
 #include <mutex>
 
+#include <CLI/CLI.hpp>
+
 #include <spdlog/spdlog.h>
 
 #include <mkl.h>
@@ -37,7 +39,7 @@
 
 #include <ipc/ipc.hpp>
 
-namespace labd{
+namespace CABD{
 
 using scalar = double;
 

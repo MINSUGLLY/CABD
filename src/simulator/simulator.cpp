@@ -1,6 +1,6 @@
 #include "simulator.hpp"
 
-namespace labd{
+namespace CABD{
 
 void Simulator::loadConfig(const std::string& configPath){
     spdlog::info("load scene config ...");

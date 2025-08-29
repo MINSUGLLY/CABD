@@ -2,7 +2,7 @@
 
 #include "object.hpp"
 
-namespace labd{
+namespace CABD{
 
 class Joint{
 public:

@@ -2,7 +2,7 @@
 
 #include "multibody.hpp"
 
-namespace labd{
+namespace CABD{
 
 class Simulator{
 public:
@@ -13,6 +13,8 @@ public:
 
     std::vector<std::shared_ptr<Object>> objsList;
     std::vector<std::shared_ptr<Multibody>> multibodiesList;
+
+    std::map<std::string, std::shared_ptr<Object>> geoCache;
 
 private:
     simType type = simType::forward;

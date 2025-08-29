@@ -1,6 +1,6 @@
 #include "simulator.hpp"
 
-namespace labd{
+namespace CABD{
 
 void Simulator::advance(){
     for(const auto& object : objsList){

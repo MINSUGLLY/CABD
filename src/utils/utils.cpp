@@ -1,6 +1,6 @@
 #include "utils.hpp"
 
-namespace labd{
+namespace CABD{
 namespace utils{
 
 void loadNpy(matX& Mat, const std::string& path){

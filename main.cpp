@@ -1,28 +1,24 @@
 #include "simulator.hpp"
 
-using namespace labd;
+using namespace CABD;
 
-int main(){
-    // spdlog::set_level(spdlog::level::info);
+int main(int argc, char** argv){
+    spdlog::set_level(spdlog::level::trace);
+
+    CLI::App app{"CABD Simulator"};
+    
+    std::string config;
+    app.add_option("-c,--config", config);
+    
+    CLI11_PARSE(app, argc, argv);
+
+    if(config.empty()){
+        spdlog::error("please provide config path");
+        return 0;
+    }
 
     Simulator sim;
-
-    /*---- config ----*/
-
-    // sim.loadConfig("../config/scene/ball.json");
-    // sim.loadConfig("../config/scene/cube.json");
-    // sim.loadConfig("../config/scene/rod.json");
-    // sim.loadConfig("../config/scene/link.json");
-    // sim.loadConfig("../config/scene/link_circle.json");
-
-    // sim.loadConfig("../config/scene/chain.json");
-    // sim.loadConfig("../config/scene/ring.json");
-    sim.loadConfig("../config/scene/grid.json");
-
-    // sim.loadConfig("../config/scene/deform_test.json");
-    // sim.loadConfig("../config/scene/rod_static.json");
-
-    /*---- end ----*/
+    sim.loadConfig("../config/scene/" + config + ".json");
 
     std::thread simThread(std::bind(&Simulator::simLoop, &sim));
     sim.launch();

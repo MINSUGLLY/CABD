@@ -6,7 +6,7 @@
 
 #include "tinygltf/tiny_gltf.h"
 
-namespace labd{
+namespace CABD{
 
 Joint::Joint(int idx0Input, int idx1Input, const vec3& pos0Input, const vec3& pos1Input){
     idx0 = idx0Input;

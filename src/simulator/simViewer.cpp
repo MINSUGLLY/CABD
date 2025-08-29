@@ -1,6 +1,6 @@
 #include "simulator.hpp"
 
-namespace labd{
+namespace CABD{
 
 void Simulator::initViewer(){
     polyscope::view::setUpDir(polyscope::UpDir::ZUp);

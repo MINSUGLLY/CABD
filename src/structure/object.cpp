@@ -1,6 +1,6 @@
 #include "object.hpp"
 
-namespace labd{
+namespace CABD{
 
 Object::Object(const std::string& configPath){
     std::ifstream file(configPath);
@@ -11,7 +11,7 @@ Object::Object(const std::string& configPath){
     rho = j["parameter"]["rho"];
     nv = j["parameter"]["nv"];
     kappa = j["parameter"]["kappa"];
-    soft = j["parameter"]["soft"];
+    // soft = j["parameter"]["soft"];
 
     // mesh
     utils::loadNpy(meshTV, j["mesh"]["pathV"]);
@@ -32,14 +32,38 @@ Object::Object(const std::string& configPath){
     vec3 forceE = vec3::Zero();
     vec3 torqueE = vec3::Zero();
 
-    // FEM
-    if(soft){
-        utils::loadNpy(fixVs, j["fixP"]);
-        FEMprecompute();
-    }
+    // // FEM
+    // if(soft){
+    //     utils::loadNpy(fixVs, j["fixP"]);
+    //     FEMprecompute();
+    // }
 
-    // collision
-    localAABBtree.init(meshTV, meshTF);
+    // // collision
+    // localAABBtree.init(meshTV, meshTF);
+}
+
+Object::Object(std::shared_ptr<Object> src){
+    // mesh
+    meshTV = src->meshTV;
+    meshTT = src->meshTT;
+    meshTF = src->meshTF;
+
+    // parameter
+    rho = src->rho;
+    nv = src->nv;
+    kappa = src->kappa;
+
+    // linearABD
+    Mtet = src->Mtet;
+    Ktet = src->Ktet;
+    linearHessian = src->linearHessian;
+    linearHessianInv = src->linearHessianInv;
+    massTotal = src->massTotal;
+    massCenter = src->massCenter;
+
+    // force
+    forceE = src->forceE;
+    torqueE = src->torqueE;
 }
 
 void Object::generateLinearHessianInv(){

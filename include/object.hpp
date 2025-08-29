@@ -2,12 +2,13 @@
 
 #include "utils.hpp"
 
-namespace labd{
+namespace CABD{
 
 class Object{
 public:
     // initialize
     Object(const std::string& configPath);
+    Object(std::shared_ptr<Object> src);
     Object() = default;
 
     // mesh
