@@ -9,6 +9,12 @@ void Simulator::advance(){
     for(const auto& multibody : multibodiesList){
         multibodyAdvance(multibody);
     }
+
+    if(!savePath.empty() && (totalFramesCount % saveInterval == 0)){
+        saveState(savePath + std::to_string(saveFramesCount) + std::string(".npy"));
+        saveFramesCount++;
+    }
+    totalFramesCount++;
 }
 
 void Simulator::objectAdvance(std::shared_ptr<Object> object){

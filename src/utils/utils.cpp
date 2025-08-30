@@ -21,7 +21,8 @@ void loadNpy(matXi& Mat, const std::string& path){
 
 void saveNpy(const matX& Mat, const std::string& path){
     std::vector<size_t> shape = {static_cast<size_t>(Mat.rows()), static_cast<size_t>(Mat.cols())};
-    cnpy::npy_save(path, Mat.data(), shape, "w");
+    Eigen::Matrix<scalar, Eigen::Dynamic, Eigen::Dynamic, Eigen::RowMajor> tmp = Mat;
+    cnpy::npy_save(path, tmp.data(), shape, "w");
 }
 
 vec3 jsonV3(const nlohmann::json& src){

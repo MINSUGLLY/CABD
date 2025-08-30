@@ -15,8 +15,12 @@ public:
     std::vector<std::shared_ptr<Multibody>> multibodiesList;
 
     std::map<std::string, std::shared_ptr<Object>> geoCache;
+    
+    std::string savePath;
+    int saveInterval;
+    int saveFramesCount = 0;
+    int totalFramesCount = 0;
 
-private:
     simType type = simType::forward;
 
     vec3 gravity;
