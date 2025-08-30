@@ -15,19 +15,28 @@ Joint::Joint(int idx0Input, int idx1Input, const vec3& pos0Input, const vec3& po
     pos1 = pos1Input;
 }
 
-Multibody::Multibody(const std::string& configPath){
+Multibody::Multibody(const std::string& configPath, std::map<std::string, std::shared_ptr<Object>>& geoCache){
     std::ifstream file(configPath);
     nlohmann::json j;
     file >> j;
 
+    int linkCount = 0;
     for(const auto& linkConfig : j["links"]){
+        spdlog::info("load link config {} / {}", ++linkCount, j["links"].size());
         mat3 initR = utils::rpy2R(utils::jsonV3(linkConfig["rpy"]));
         vec3 initp = utils::jsonV3(linkConfig["xyz"]);
-        appendLink(std::make_shared<Object>(linkConfig["configPath"]), initp, initR);
-        linksList[linksList.size()-1]->fixed = linkConfig["static"];
-        if(linksList[linksList.size()-1]->fixed){
-            utils::q2Rp(linksList[linksList.size()-1]->q, linksList[linksList.size()-1]->Rt, linksList[linksList.size()-1]->pt);
-            utils::q2Rp(linksList[linksList.size()-1]->q, linksList[linksList.size()-1]->Rd, linksList[linksList.size()-1]->pd);
+        if(geoCache.find(linkConfig["configPath"]) != geoCache.end()){
+            spdlog::info("use cached geometry {}", linkConfig["configPath"]);
+            appendLink(std::make_shared<Object>(geoCache[linkConfig["configPath"]]), initp, initR);
+        }
+        else{
+            appendLink(std::make_shared<Object>(linkConfig["configPath"]), initp, initR);
+            geoCache[linkConfig["configPath"]] = linksList.back();
+        }
+        linksList.back()->fixed = linkConfig["static"];
+        if(linksList.back()->fixed){
+            utils::q2Rp(linksList.back()->q, linksList.back()->Rt, linksList.back()->pt);
+            utils::q2Rp(linksList.back()->q, linksList.back()->Rd, linksList.back()->pd);
         }
     }
 

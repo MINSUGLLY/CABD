@@ -23,15 +23,24 @@ void Simulator::loadConfig(const std::string& configPath){
         spdlog::info("load object config {} / {}", ++objCount, j["object"].size());
         mat3 initR = utils::jsonM3(objConfig["initR"]);
         vec3 initp = utils::jsonV3(objConfig["initp"]);
-        appendObject(std::make_shared<Object>(objConfig["configPath"]), initp, initR);
+        if(geoCache.find(objConfig["configPath"]) != geoCache.end()){
+            spdlog::info("use cached geometry {}", objConfig["configPath"]);
+            appendObject(std::make_shared<Object>(geoCache[objConfig["configPath"]]), initp, initR);
+        }
+        else{
+            appendObject(std::make_shared<Object>(objConfig["configPath"]), initp, initR);
+            geoCache[objConfig["configPath"]] = objsList.back();
+        }
     }
+    totalObjNum = objsList.size();
 
     // multibody
     int multibodyCount = 0;
     spdlog::info("load multibody ...");
     for(const auto& multibodyConfig : j["multibody"]){
-        spdlog::info("load object config {} / {}", ++objCount, j["multibody"].size());
-        appendMultibody(std::make_shared<Multibody>(multibodyConfig["configPath"]));
+        spdlog::info("load multibody config {} / {}", ++objCount, j["multibody"].size());
+        appendMultibody(std::make_shared<Multibody>(multibodyConfig["configPath"], geoCache));
+        totalObjNum += multibodiesList.back()->linksList.size();
     }
 }
 
@@ -80,6 +89,23 @@ void Simulator::simLoop(){
             std::this_thread::sleep_for(std::chrono::milliseconds(1)); 
         }
     }
+}
+
+void Simulator::saveState(const std::string& path){
+    matX result(totalObjNum, 12);
+    int objCount = 0;
+    for(const auto& obj : objsList){
+        result.row(objCount) = obj->q;
+        objCount++;
+    }
+    for(const auto& multibody : multibodiesList){
+        for(const auto& link : multibody->linksList){
+            result.row(objCount) = link->q;
+            objCount++;
+        }
+    }
+
+    utils::saveNpy(result, path);
 }
 
 }

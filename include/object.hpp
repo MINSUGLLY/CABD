@@ -8,8 +8,8 @@ class Object{
 public:
     // initialize
     Object(const std::string& configPath);
-    Object(std::shared_ptr<Object> src);
     Object() = default;
+    Object(std::shared_ptr<Object> src);
 
     // mesh
     matX meshTV;

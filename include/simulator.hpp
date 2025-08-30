@@ -48,6 +48,9 @@ private:
     void advance();
     void objectAdvance(std::shared_ptr<Object> object);
     void multibodyAdvance(std::shared_ptr<Multibody> multibody);
+
+    void saveState(const std::string& path);
+    int totalObjNum;
 };
     
 }

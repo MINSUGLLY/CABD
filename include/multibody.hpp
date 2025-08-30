@@ -20,7 +20,7 @@ public:
 
 class Multibody{
 public:
-    Multibody(const std::string& csvPath);
+    Multibody(const std::string& csvPath, std::map<std::string, std::shared_ptr<Object>>& geoCache);
     
     int idx;
     void setIdx(int idxInput){idx = idxInput;}

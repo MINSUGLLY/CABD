@@ -7,7 +7,7 @@ void Simulator::initViewer(){
     polyscope::view::setFrontDir(polyscope::FrontDir::XFront);
 
     polyscope::options::automaticallyComputeSceneExtents = false;
-    polyscope::state::lengthScale = 10.0;
+    polyscope::state::lengthScale = 100.0;
     polyscope::state::boundingBox = std::tuple<glm::vec3, glm::vec3>{ {-1.0, -1.0, 0.0}, {1.0, 1.0, 1.0} };
 
     polyscope::options::alwaysRedraw = true;

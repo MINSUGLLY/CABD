@@ -113,6 +113,7 @@ template<typename T> bool InputScalar3(const char* label, T* value){
 
 void loadNpy(matX& Mat, const std::string& path);
 void loadNpy(matXi& Mat, const std::string& path);
+void saveNpy(const matX& Mat, const std::string& path);
 
 vec3 jsonV3(const nlohmann::json& src);
 mat3 jsonM3(const nlohmann::json& src);
