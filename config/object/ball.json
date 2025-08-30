@@ -1,8 +1,8 @@
 {
     "mesh": {
-        "pathV": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/ball/tetMesh/ball0/TV.npy",
-        "pathT": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/ball/tetMesh/ball0/TT.npy",
-        "pathF": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/ball/tetMesh/ball0/TF.npy"
+        "pathV": "../assets/obj/ball/TV.npy",
+        "pathT": "../assets/obj/ball/TT.npy",
+        "pathF": "../assets/obj/ball/TF.npy"
     },
 
     "origin": {

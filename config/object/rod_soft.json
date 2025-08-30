@@ -1,8 +1,8 @@
 {
     "mesh": {
-        "pathV": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/rod/tetMesh/rod0/TV.npy",
-        "pathT": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/rod/tetMesh/rod0/TT.npy",
-        "pathF": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/rod/tetMesh/rod0/TF.npy"
+        "pathV": "../assets/obj/rod/TV.npy",
+        "pathT": "../assets/obj/rod/TT.npy",
+        "pathF": "../assets/obj/rod/TF.npy"
     },
 
     "origin": {
@@ -18,5 +18,5 @@
         "soft": true
     },
 
-    "fixP": "/home/zhiyong/mnt/disk0/iabd_file/asset/obj/rod/fixP/rod0.npy"
+    "fixP": ""
 }
